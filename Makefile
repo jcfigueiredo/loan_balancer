@@ -1,2 +1,2 @@
 run_tests:
-	pytest "tests" -p no:warnings
+	pytest -s "tests" -p no:warnings
