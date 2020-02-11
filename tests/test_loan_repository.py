@@ -13,7 +13,7 @@ class LoanRepository(object):
         try:
             reader = csv.DictReader(f)
             for row in reader:
-                pass
+                Loan.from_dict(row)
         finally:
             f.close()
         return loans
@@ -32,3 +32,4 @@ class TheLoanRepository(unittest.TestCase):
         loans = LoanRepository.load_from_file(path='./tests/fixtures/loans.csv')
 
         self.assertListEqual(loans, [])
+

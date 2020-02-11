@@ -68,3 +68,10 @@ class TestLoanModel(unittest.TestCase):
         self.assertEqual(loan.default_likelihood, 0.02)
         self.assertEqual(loan.interest_rate, 0.15)
         self.assertEqual(loan.state, 'MO')
+
+    def test_have_a_representation(self):
+        loan = Loan.from_dict({'interest_rate': '0.15', 'amount': '10552', 'id': '1', 'default_likelihood': '0.02',
+                               'state': 'MO'})
+
+        self.assertEqual(loan.__repr__(), "Loan(id=1, amount=10552, default_likelihood=0.02, interest_rate=0.15, "
+                                          "state='MO')")

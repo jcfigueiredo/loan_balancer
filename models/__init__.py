@@ -27,3 +27,10 @@ class Loan(object):
             converted_dict[key] = val
 
         return cls(**converted_dict)
+
+    def __repr__(self) -> str:
+        items = ('{}={!r}'.format(k, v) for k, v in self.__dict__.items())
+        return "{}({})".format(self.__class__.__name__, ', '.join(items))
+
+
+
