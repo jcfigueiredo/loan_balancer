@@ -13,7 +13,7 @@ class LoanRepository(object):
         try:
             reader = csv.DictReader(f)
             for row in reader:
-                print(row)
+                pass
         finally:
             f.close()
         return loans

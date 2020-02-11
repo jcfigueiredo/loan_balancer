@@ -58,3 +58,13 @@ class TestLoanModel(unittest.TestCase):
         self.assertEqual(loan.default_likelihood, 0.02)
         self.assertEqual(loan.interest_rate, 0.15)
         self.assertEqual(loan.state, 'MO')
+
+    def test_can_be_created_from_dict_converting_properties(self):
+        loan = Loan.from_dict({'interest_rate': '0.15', 'amount': '10552', 'id': '1', 'default_likelihood': '0.02',
+                               'state': 'MO'})
+
+        self.assertEqual(loan.id, 1)
+        self.assertEqual(loan.amount, 10552)
+        self.assertEqual(loan.default_likelihood, 0.02)
+        self.assertEqual(loan.interest_rate, 0.15)
+        self.assertEqual(loan.state, 'MO')

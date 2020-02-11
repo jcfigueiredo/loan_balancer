@@ -13,4 +13,17 @@ class Loan(object):
 
     @classmethod
     def from_dict(cls, dict_):
-        return cls(**dict_)
+        converted_dict = {}
+        converters = {
+            'id': int,
+            'amount': int,
+            'default_likelihood': float,
+            'interest_rate': float,
+        }
+        for key, val in dict_.items():
+            converter = converters.get(key)
+            if converter:
+                val = converter(val)
+            converted_dict[key] = val
+
+        return cls(**converted_dict)
