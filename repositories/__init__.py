@@ -1,18 +1,35 @@
 import csv
 
-from models import Loan
+from models import Loan, Bank, Covenant, Facility
 
 
-class LoanRepository(object):
+class BaseRepository(object):
+    MODEL = None
 
     @classmethod
     def load_from_file(cls, path):
-        loans = []
+        items = []
         f = open(path, 'rt')
         try:
             reader = csv.DictReader(f)
             for row in reader:
-                loans.append(Loan.from_dict(row))
+                items.append(cls.MODEL.from_dict(row))
         finally:
             f.close()
-        return loans
+        return items
+
+
+class LoanRepository(BaseRepository):
+    MODEL = Loan
+
+
+class BankRepository(BaseRepository):
+    MODEL = Bank
+
+
+class CovenantRepository(BaseRepository):
+    MODEL = Covenant
+
+
+class FacilityRepository(BaseRepository):
+    MODEL = Facility

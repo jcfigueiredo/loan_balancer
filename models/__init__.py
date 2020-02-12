@@ -19,6 +19,14 @@ class BaseModel(object):
         return "{}({})".format(self.__class__.__name__, ', '.join(items))
 
 
+def float_or_none(val):
+    return val and float(val) or None
+
+
+def forced_int(val):
+    return int(float(val))
+
+
 class Loan(BaseModel):
     CONVERTERS = {
         'id': int,
@@ -42,41 +50,42 @@ class Loan(BaseModel):
 
 class Facility(BaseModel):
     CONVERTERS = {
-        'facility_id': int,
-        'amount': int,
-        'bank_id': float,
+        'id': int,
+        'bank_id': int,
+        'amount': forced_int,
         'interest_rate': float,
     }
 
-    def __init__(self, bank_id, facility_id, amount, interest_rate) -> None:
+    def __init__(self, bank_id, id, amount, interest_rate) -> None:
         self.bank_id = bank_id
-        self.facility_id = facility_id
+        self.id = id
         self.interest_rate = interest_rate
         self.amount = amount
 
     def __eq__(self, o: object) -> bool:
         # noinspection PyUnresolvedReferences
-        return self.facility_id == o.facility_id
+        return self.id == o.id
+
 
 class Bank(BaseModel):
     CONVERTERS = {
-        'bank_id': int,
+        'id': int,
     }
 
-    def __init__(self, bank_id, bank_name) -> None:
-        self.bank_id = bank_id
-        self.bank_name = bank_name
+    def __init__(self, id, name) -> None:
+        self.id = id
+        self.name = name
 
     def __eq__(self, o: object) -> bool:
         # noinspection PyUnresolvedReferences
-        return self.bank_id == o.bank_id
+        return self.id == o.id
 
 
 class Covenant(BaseModel):
     CONVERTERS = {
         'facility_id': int,
         'bank_id': float,
-        'max_default_likelihood': float,
+        'max_default_likelihood': float_or_none,
     }
 
     def __init__(self, bank_id, facility_id, max_default_likelihood, banned_state) -> None:

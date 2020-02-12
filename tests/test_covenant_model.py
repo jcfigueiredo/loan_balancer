@@ -75,6 +75,20 @@ class TestCovenantModel(unittest.TestCase):
         self.assertEqual(covenant.banned_state, banned_state)
         self.assertEqual(covenant.max_default_likelihood, max_default_likelihood)
 
+    def test_can_handle_empty_max_default(self):
+        facility_id = 1
+        bank_id = 2
+        max_default_likelihood = None
+        banned_state = 'MT'
+
+        covenant = Covenant.from_dict({'max_default_likelihood': '', 'banned_state': 'MT', 'facility_id': '1',
+                                       'bank_id': '2'})
+
+        self.assertEqual(covenant.facility_id, facility_id)
+        self.assertEqual(covenant.bank_id, bank_id)
+        self.assertEqual(covenant.banned_state, banned_state)
+        self.assertEqual(covenant.max_default_likelihood, max_default_likelihood)
+
     def test_have_a_representation(self):
         covenant = Covenant.from_dict({'max_default_likelihood': '1.2', 'banned_state': 'MT', 'facility_id': '1',
                                        'bank_id': '2'})
